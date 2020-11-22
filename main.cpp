@@ -3,14 +3,12 @@
     using namespace std;
 //  ====================
 
-
 //  ================
 //  Enumerated Types
 //  =======================================================
     enum Operations {Addition, Subtraction, Multiplication,
                      Division, Quit};
 //  =================================
-
 
 //  ==========
 //  Structures
@@ -21,7 +19,6 @@
     }; // Structure Fraction
 //  ========================
 
-
 //  ===================
 //  Function Prototypes
 //  ===================
@@ -30,7 +27,7 @@
         void Menu();
         void Print(Operations, Fraction, Fraction, Fraction);
         void ProcessCommand(Operations&);
-        void QueryUser(Operations&)
+        void QueryUser(Operations&);
 //  ====================
 
 //  ===============
@@ -51,15 +48,33 @@
     } // Function main()
 //  ====================
 
+//  ========================================
+    Fraction Add(Fraction fA, Fraction fB) {
+
+        int a, b, c, d;
+        Fraction fC;
+
+        a = fA.num; b = fA.den;
+        c = fB.num; d = fB.den;
+
+        fC.num = a * d + b * c;
+        fC.den = b * d;
+
+        return fC;
+    } // Function Add()
+//  ===================
 
 //  ========================
     Fraction GetFraction() {
         Fraction f;
 
-        cout << "Enter a numerator ==> " << endl;
-        cin >> f.num; 
-        cout << "Enter a denominator ==> " << endl;
+        cout << "Enter a numerator ==> ";
+        cin >> f.num;
+        cout << "Enter a denominator ==> ";
         cin >> f.den;
+
+        return f;
+
     } // Function GetFraction()
 //  ===========================
 
@@ -74,14 +89,59 @@
     } // Function Menu()
 //  ====================
 
+//  ==========================
+    void Print (Operations op,
+                Fraction fA, Fraction fB, Fraction fC) {
+
+            if (op == Addition)
+                cout << fA.num << "/" << fA.den << " + "
+                     << fB.num << "/" << fB.den << " = "
+                     << fC.num << "/" << fC.den << endl;
+
+        } // Function Print()
+    //  =====================
+
+//  ==========================
+    void ProcessCommand(Operations& choice) {
+
+        Fraction fA, fB, fC;
+
+        if (choice == Quit)
+            cout << "Terminating execution." << endl;
+        else {
+            fA = GetFraction();
+            fB = GetFraction();
+
+            switch (choice) {
+                case Addition: fC = Add(fA, fB);       break;
+//                case Subtraction: fC = Add(fA, fB);    break;
+//                case Multiplication: fC = Add(fA, fB); break;
+//                case Division: fC = Add(fA, fB);       break;
+                default: cout << "Error condition detected." << endl;
+            }  // switch
+        } // else
+
+        Print(choice, fA, fB, fC);
+
+    } // Function ProcessCommand()
+//  ==============================
+
 //  =================================
     void QueryUser(Operations& op) {
-            case 1: op = Add;       break;
-            case 2: op = Subtract;  break;
-            case 3: op = Multiply;  break;
-            case 4: op = Divide;    break;
-            case 5: op = Quit;      break;d
-            default: cout << "Input Error Condition";
-        } // switch
+
+        int choice;
+
+        cout << endl;
+        cout << "Enter your choice ==> ";
+        cin >> choice;
+
+            switch (choice) {
+            case 1: op = Addition;       break;
+            case 2: op = Subtraction;    break;
+            case 3: op = Multiplication; break;
+            case 4: op = Division;       break;
+            case 5: op = Quit;           break;
+            default: cout << "Input Error condition";
+            } // switch
     } // Function QueryUser()
 //  =========================
